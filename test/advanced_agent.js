@@ -61,7 +61,7 @@ module.exports = {
             }),
             agent = Asker.getAgent(request);
 
-        assert.strictEqual(agent, Asker.agentsPool[AGENT_NAME],
+        assert.strictEqual(agent, AdvancedAgent.pool[AGENT_NAME],
             'step #1: agent in the pool');
 
         request = null;
@@ -71,7 +71,7 @@ module.exports = {
 
         agent.emit(AdvancedAgent.EVENTS.SOCKET_REMOVED);
 
-        assert.strictEqual(Object.keys(Asker.agentsPool).length, 0,
+        assert.strictEqual(Object.keys(AdvancedAgent.pool).length, 0,
             'non-persistent agent removed from pool by "' +
                 AdvancedAgent.EVENTS.SOCKET_REMOVED +
                 '" event');
