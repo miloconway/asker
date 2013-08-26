@@ -167,12 +167,12 @@ module.exports = {
 
     'Request.getAgent() must returns existing agent from pool if agent with desired name exists in the agents pool' : function() {
         var AGENT_OPTIONS = { name : 'getAgent test' },
-            agent = Asker.createAgent(AGENT_OPTIONS);
+            agent = new AdvancedAgent(AGENT_OPTIONS);
 
         assert.strictEqual(Asker.getAgent(new Asker({ agent : AGENT_OPTIONS })), agent,
             'getAgent returns existing agent');
 
-        assert.strictEqual(Object.keys(Asker.agentsPool).length, 1,
+        assert.strictEqual(Object.keys(AdvancedAgent.pool).length, 1,
             'only 1 advanced agent in the agents pool');
     }
 };
