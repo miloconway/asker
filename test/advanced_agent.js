@@ -151,17 +151,17 @@ module.exports = {
     'Request.getAgent() must create agent if no agent with desired name is not exist in the pool' : function() {
         var agent;
 
-        assert.strictEqual(Object.keys(Asker.agentsPool).length, 0,
+        assert.strictEqual(Object.keys(AdvancedAgent.pool).length, 0,
             'agents pool is empty');
 
         agent = Asker.getAgent(new Asker({ agent : { name : 'getAgent test' } }));
 
         assert.ok(agent instanceof AdvancedAgent, 'Advanced agent created');
 
-        assert.strictEqual(Object.keys(Asker.agentsPool).length, 1,
+        assert.strictEqual(Object.keys(AdvancedAgent.pool).length, 1,
             'agents pool contains 1 agent');
 
-        assert.strictEqual(Asker.agentsPool[agent.options.name], agent,
+        assert.strictEqual(AdvancedAgent.pool[agent.options.name], agent,
             'created agent is hosted in the agents pool');
     },
 
