@@ -32,16 +32,16 @@ module.exports = {
             agent1,
             agent2;
 
-        assert.strictEqual(typeof Asker.agentsPool, 'object',
+        assert.strictEqual(typeof AdvancedAgent.pool, 'object',
             'agent pool is object and accessible via Asker.agentsPool');
 
-        assert.strictEqual(Object.keys(Asker.agentsPool).length, 0,
+        assert.strictEqual(Object.keys(AdvancedAgent.pool).length, 0,
             'pool is empty, globalAgent is not holded by the agents pool');
 
         agent1 = Asker.getAgent(request1);
         agent2 = Asker.getAgent(request2);
 
-        assert.strictEqual(Object.keys(Asker.agentsPool).length, 1,
+        assert.strictEqual(Object.keys(AdvancedAgent.pool).length, 1,
             'agent added to the agents pool due to request contructor call with `agent` option');
 
         assert.strictEqual(agent1, agent2,
