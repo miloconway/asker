@@ -1,4 +1,5 @@
 var http = require('http'),
+    https = require('https'),
     Asker = require('../lib/asker'),
     ask = Asker,
     AdvancedAgent = require('../lib/advanced_agent').get('http'),
@@ -83,6 +84,12 @@ module.exports = {
 
         assert.strictEqual(http.Agent.defaultMaxSockets, 1024,
             'http.Agent per host:port pair pools size is 1024 by default');
+
+        assert.strictEqual(https.globalAgent.maxSockets, 1024,
+            'https.globalAgent per host:port pair pools size is 1024');
+
+        assert.strictEqual(https.Agent.defaultMaxSockets, 1024,
+            'https.Agent per host:port pair pools size is 1024 by default');
     },
 
     'Request.createAgent() must create AdvancedAgent instance and host it in the Request.agentsPool' : function() {
