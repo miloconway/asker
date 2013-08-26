@@ -295,6 +295,7 @@ module.exports = {
         assert.deepEqual(
             Asker.DEFAULT_OPTIONS,
             {
+                protocol : 'http:',
                 host : 'localhost',
                 port : 80,
                 path : '/',

@@ -92,62 +92,13 @@ module.exports = {
             'https.Agent per host:port pair pools size is 1024 by default');
     },
 
-    'Request.createAgent() must create AdvancedAgent instance and host it in the Request.agentsPool' : function() {
+    'non-persistent agent should not be removed from pool when queue became empty' : httpTest(function(done, server) {
         var AGENT_OPTIONS = {
-                name : 'test agent',
-                maxSockets : 2000,
-                persistent : false
-            },
-            agent = Asker.createAgent(AGENT_OPTIONS);
-
-        assert.ok(agent instanceof AdvancedAgent,
-            'createAgent returns AdvancedAgent instance');
-
-        assert.ok(agent instanceof http.Agent,
-            'createAgent returns instance of http.Agent inheritor');
-
-        assert.strictEqual(agent, Asker.agentsPool[AGENT_OPTIONS.name],
-            'agent hosted in the pool');
-
-        assert.strictEqual(Object.keys(Asker.agentsPool).length, 1,
-            'only 1 agent in the pool');
-    },
-
-    'Request.createAgent() throws an error, if agent name already reserved in the pool' : function() {
-        var AGENT_OPTIONS = {
-                name : 'test agent',
-                maxSockets : 2000,
-                persistent : false
-            },
-            agent;
-
-        assert.strictEqual(Object.keys(Asker.agentsPool).length, 0,
-            'agents pool is empty');
-
-        agent = Asker.createAgent(AGENT_OPTIONS);
-
-        assert.strictEqual(Object.keys(Asker.agentsPool).length, 1,
-            'agent is hosted in the pool');
-
-        assert.throws(
-            function() {
-                Asker.createAgent(AGENT_OPTIONS);
-            },
-            Asker.Error.createError(
-                Asker.Error.CODES.AGENT_NAME_ALREADY_IN_USE,
-                { agentName : AGENT_OPTIONS.name }).message);
-
-        assert.strictEqual(Object.keys(Asker.agentsPool).length, 1,
-            'still 1 agent is hosted in the pool');
-    },
-
-    'non-persistent agent should not be removed from pool if it has any requests in queue' : httpTest(function(done, server) {
-        var AGENT_OPTIONS = {
-                name : 'non-persistent agent test #75840',
+                name : 'test',
                 maxSockets : 1,
                 persistent : false
             },
-            agent = Asker.createAgent(AGENT_OPTIONS),
+            agent = new AdvancedAgent(AGENT_OPTIONS),
             socketRemoveEmitted = 0,
             requestsResolved = 0;
 
