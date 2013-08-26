@@ -1,22 +1,22 @@
 var http = require('http'),
     Asker = require('../lib/asker'),
     ask = Asker,
-    AdvancedAgent = require('../lib/advanced_agent'),
+    AdvancedAgent = require('../lib/advanced_agent').get('http'),
     httpTest = require('./lib/http'),
     assert = require('chai').assert;
 
 module.exports = {
     beforeEach : function(callback) {
         // reset agents pools before each test
-        Object.keys(Asker.agentsPool).forEach(function(agentName) {
-            delete Asker.agentsPool[agentName];
+        Object.keys(AdvancedAgent.pool).forEach(function(agentName) {
+            delete AdvancedAgent.pool[agentName];
         });
 
         callback();
     },
 
     'inheritance' : function() {
-        var agent = new AdvancedAgent();
+        var agent = new AdvancedAgent({ name : 'test' });
 
         assert.ok(agent instanceof AdvancedAgent,
             'agent instanceof AdvancedAgent');
