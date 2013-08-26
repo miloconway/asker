@@ -108,7 +108,7 @@ module.exports = {
                     assert.strictEqual(socketRemoveEmitted, 2,
                         'socketRemoved event emitted on each inappropriate response');
 
-                    assert.strictEqual(typeof Asker.agentsPool[AGENT_OPTIONS.name], 'undefined',
+                    assert.strictEqual(typeof AdvancedAgent.pool[AGENT_OPTIONS.name], 'undefined',
                         'non-persistent agent removed when it`s queue became empty');
 
                     done();
