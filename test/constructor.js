@@ -297,7 +297,6 @@ module.exports = {
             {
                 protocol : 'http:',
                 host : 'localhost',
-                port : 80,
                 path : '/',
                 method : 'GET',
                 bodyEncoding : 'string',
