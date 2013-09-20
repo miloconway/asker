@@ -2,7 +2,8 @@ var http = require('http'),
     https = require('https'),
     Asker = require('../lib/asker'),
     ask = Asker,
-    AdvancedAgent = require('../lib/advanced_agent').get('http'),
+    agentFactory = require('../lib/advanced_agent'),
+    AdvancedAgent = agentFactory('http'),
     httpTest = require('./lib/http'),
     assert = require('chai').assert;
 
@@ -14,6 +15,20 @@ module.exports = {
         });
 
         callback();
+    },
+
+    'advancedAgentFactory must return Advancedagent for "http" module by default' : function() {
+        var HTTPAgent = agentFactory('http'),
+            DefaultAgent = agentFactory();
+
+        assert.strictEqual(HTTPAgent, DefaultAgent,
+            'factory returns same Agent constructor by default as for "http" module');
+    },
+
+    'advancedAgentFactory fail if unknown module has been passed' : function() {
+        assert.throws(function() {
+            agentFactory('ololoxoxo');
+        });
     },
 
     'inheritance' : function() {
